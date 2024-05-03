@@ -26,6 +26,7 @@ def collaborative_filtering(track_title, music_data):
     return sorted_similar_tracks
 
 # Function to handle the recommendation process
+# Function to handle the recommendation process
 def recommend(user_input, track_titles, music_data):
     if not user_input:
         st.error("Please enter a track title.")
@@ -42,14 +43,14 @@ def recommend(user_input, track_titles, music_data):
         if collab_filtering_result:
             st.success(f"🎶 Top 10 tracks similar to '{closest_match}' based on Collaborative Filtering:")
             table_data = []
-            for idx, (track_idx, similarity_score) in enumerate(collab_filtering_result, start=1):
+            for idx, (track_idx, _) in enumerate(collab_filtering_result, start=1):
                 if idx > 10:
                     break
                 similar_track = music_data.iloc[track_idx]
                 artist = similar_track['Artist']
                 spotify_url = similar_track['Url_spotify']
                 spotify_link = f"<a href='{spotify_url}' target='_blank' style='color: #1DB954; text-decoration: none;'>Listen on Spotify</a>"
-                table_data.append((idx, similar_track['Track'], artist, similarity_score, similar_track['Likes'], similar_track['Views'], spotify_link))
+                table_data.append((idx, similar_track['Track'], artist, spotify_link))
             
             st.markdown("""
             <style>
@@ -94,8 +95,9 @@ def recommend(user_input, track_titles, music_data):
             </style>
             """, unsafe_allow_html=True)
 
-            df = pd.DataFrame(table_data, columns=["No.", "Song's name", "Artist", "Similarity Score", "Likes", "Views", "Spotify"])
+            df = pd.DataFrame(table_data, columns=["No.", "Song's name", "Artist", "Spotify"])
             st.write(df.to_html(escape=False, classes='styled-table'), unsafe_allow_html=True)
+
 
 # Main function
 def main():
