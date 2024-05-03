@@ -97,6 +97,10 @@ def recommend(user_input, track_titles, music_data):
 
             df = pd.DataFrame(table_data, columns=["No.", "Song's name", "Artist", "Spotify"])
             st.write(df.to_html(escape=False, classes='styled-table'), unsafe_allow_html=True)
+        else:
+            st.warning("No similar tracks found.")
+    else:
+        st.error("No match found for the entered track title.")
 
 
 # Main function
